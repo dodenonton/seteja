@@ -1,5 +1,5 @@
 /**
- * SUTEJA WOOD ART - Interactive Logic
+ * SUTEJA WOOD ART - Interactive Logic (English Edition)
  * Matching official design and WhatsApp integration
  */
 
@@ -61,43 +61,43 @@ function initSmoothScroll() {
 }
 
 /* -------------------------------------------------------------------------
-   Product Detail Modal
+   Product Detail Modal (English Data)
    ------------------------------------------------------------------------- */
 const PRODUCTS_DATA = {
   ganesha: {
-    title: 'Patung Ganesha',
-    category: 'Patung Kayu Mitologi',
+    title: 'Lord Ganesha Wood Statue',
+    category: 'Sacred Mythological Statues',
     img: 'images/prod_ganesha.jpg',
-    material: 'Kayu Suar Solid / Oven Kiln-Dried',
-    desc: 'Patung Dewa Ganesha perlambang kebijaksanaan dan penyingkir segala rintangan. Dikerjakan dengan pahat tangan murni berornamen mahkota praba khas Bali.'
+    material: 'Select Kiln-Dried Solid Suar Wood',
+    desc: 'Lord Ganesha, the revered deity of wisdom, prosperity, and the remover of obstacles. Chiseled by hand with meticulous precision in the ornate Balinese praba crown.'
   },
   penari: {
-    title: 'Patung Penari Bali',
-    category: 'Seni Figur Tradisional',
+    title: 'Balinese Legong Dancer Sculpture',
+    category: 'Traditional Figurative Sculpture',
     img: 'images/prod_penari.jpg',
-    material: 'Kayu Suar / Waru Pilihan',
-    desc: 'Figur penari legong Bali dalam balutan busana adat lengkap dengan gelungan bunga kamboja. Lekuk tubuh dinamis mengekspresikan kelenturan tarian dewata.'
+    material: 'Aged Suar & Waru Wood',
+    desc: 'Capturing the graceful elegance of a traditional Balinese Legong dancer, crowned with frangipani blossoms and adorned in royal ceremonial attire.'
   },
   kotak: {
-    title: 'Kotak Souvenir Ukir',
-    category: 'Souvenir & Kerajinan',
+    title: 'Hand-Carved Keepsake Jewelry Box',
+    category: 'Authentic Souvenirs & Decor',
     img: 'images/prod_kotak.jpg',
-    material: 'Kayu Jati Solid / Suar',
-    desc: 'Kotak kayu berukir ornamen bunga teratai dan daun kuta-mesir Bali. Sangat pas untuk kotak perhiasan berharga, kado spesial, atau souvenir eksklusif.'
+    material: 'Perhutani Solid Teak Wood (Kayu Jati)',
+    desc: 'An artisanal keepsake box featuring deeply chiseled Balinese floral motifs. Perfect for precious jewelry, luxury gifting, or interior accent.'
   },
   souvenir: {
-    title: 'Souvenir Miniatur Arca',
-    category: 'Souvenir Meja',
+    title: 'Miniature Meditative Figurines Set',
+    category: 'Desk Decor & Keepsakes',
     img: 'images/prod_souvenir.jpg',
-    material: 'Kayu Waru / Hibiscus Lot',
-    desc: 'Set figur miniatur dengan ekspresi ketenangan batin dan doa anjali mudra. Pilihan favorit wisatawan untuk cinderamata khas Pulau Dewata.'
+    material: 'Smooth Waru Wood (Hibiscus)',
+    desc: 'A charming trio of mini figurines in serene contemplation with prayerful anjali mudra. A beloved souvenir for international travelers and art collectors.'
   },
   hiasan: {
-    title: 'Hiasan Dinding Relik Dewi',
-    category: 'Dekorasi Interior',
+    title: 'Balinese Sacred Wall Relief Plaque',
+    category: 'Architectural Wall Decor',
     img: 'images/prod_hiasan.jpg',
-    material: 'Kayu Jati Solid (Aged Teak)',
-    desc: 'Plakat ukiran dinding berdimensi dalam yang menampilkan wajah dewi Bali bermahkota megah. Memberikan aksen hangat dan kharismatik pada ruangan Anda.'
+    material: 'Aged Solid Teak Wood',
+    desc: 'A high-relief carved wall plaque portraying an ethereal Balinese goddess. Exudes spiritual tranquility, warmth, and timeless heritage for residential spaces.'
   }
 };
 
@@ -129,7 +129,7 @@ function initProductModal() {
       modalMaterial.textContent = item.material;
 
       const waMsg = encodeURIComponent(
-        `Halo Suteja Wood Art, saya tertarik untuk memesan atau mengetahui info ketersediaan karya:\n\n*${item.title}*\nKategori: ${item.category}\nMaterial: ${item.material}\n\nApakah karya ini saat ini tersedia? Terima kasih!`
+        `Hello Suteja Wood Art, I am interested in inquiring about and ordering this artwork:\n\n*${item.title}*\nCategory: ${item.category}\nTimber Material: ${item.material}\n\nCould you please provide availability and worldwide shipping details? Thank you!`
       );
       modalWaBtn.href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
 
@@ -148,14 +148,14 @@ function initProductModal() {
 }
 
 /* -------------------------------------------------------------------------
-   Gallery Item Lightbox
+   Gallery Item Lightbox (English Data)
    ------------------------------------------------------------------------- */
 const GALLERY_DATA = {
-  '1': { title: 'Patung Penari di Taman Pura', img: 'images/gallery_1.jpg' },
-  '2': { title: 'Ukiran Relief Bunga Kuta Mesir', img: 'images/gallery_2.jpg' },
-  '3': { title: 'Koleksi Miniatur Biksu Meditasi', img: 'images/gallery_3.jpg' },
-  '4': { title: 'Kotak Ukir Kayu Jepun Bali', img: 'images/gallery_4.jpg' },
-  '5': { title: 'Karya Pahat Wajah Dewi Sri', img: 'images/gallery_5.jpg' }
+  '1': { title: 'Balinese Dancer Sculpture in Temple Garden', img: 'images/gallery_1.jpg' },
+  '2': { title: 'Intricate Kuta-Mesir Floral Wood Relief', img: 'images/gallery_2.jpg' },
+  '3': { title: 'Miniature Meditative Monks Collection', img: 'images/gallery_3.jpg' },
+  '4': { title: 'Carved Frangipani Jewelry Keepsake Box', img: 'images/gallery_4.jpg' },
+  '5': { title: 'Sacred Hand-Chiseled Goddess Face Plaque', img: 'images/gallery_5.jpg' }
 };
 
 function initGalleryModal() {
@@ -177,13 +177,13 @@ function initGalleryModal() {
 
       modalImg.src = gItem.img;
       modalImg.alt = gItem.title;
-      modalCategory.textContent = 'DOKUMENTASI GALERI KARYA';
+      modalCategory.textContent = 'ART GALLERY PORTFOLIO';
       modalTitle.textContent = gItem.title;
-      modalDesc.textContent = 'Dokumentasi karya seni asli buatan tangan empu pemahat Suteja Wood Art Bali.';
-      modalMaterial.textContent = 'Kayu Pilihan Berkualitas Tinggi';
+      modalDesc.textContent = 'Authentic hand-carved creation documented from the master carvers at Suteja Wood Art Bali.';
+      modalMaterial.textContent = 'Kiln-Dried Premium Hardwood';
 
       const waMsg = encodeURIComponent(
-        `Halo Suteja Wood Art, saya melihat foto galeri karya:\n\n*${gItem.title}*\n\nBisa saya mendapatkan info lebih lanjut mengenai karya seperti ini? Terima kasih!`
+        `Hello Suteja Wood Art, I saw this artwork in your gallery:\n\n*${gItem.title}*\n\nCould I receive more details regarding custom commissioning a similar piece? Thank you!`
       );
       modalWaBtn.href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
 
