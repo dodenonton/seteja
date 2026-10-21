@@ -1,143 +1,176 @@
 /**
- * SUTEJA WOOD ART - Interactive Logic (English Edition)
- * Matching official design and WhatsApp integration
+ * SUTEJA WOOD ART - Taksu Bali Layout & Interactive Controller
+ * Handles navigation, mobile drawer, product modal lightbox, category filtering, and WhatsApp inquiry routing.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initStickyHeader();
   initMobileMenu();
   initProductModal();
-  initGalleryModal();
-  initSmoothScroll();
+  initCategoryFilters();
+  initContactForm();
 });
 
 /* -------------------------------------------------------------------------
-   Mobile Menu Toggle
+   1. Sticky Header
    ------------------------------------------------------------------------- */
-function initMobileMenu() {
-  const toggle = document.getElementById('mobileToggle');
-  const nav = document.getElementById('navLinks');
-
-  if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-      toggle.innerHTML = nav.classList.contains('open') ? '&#10005;' : '&#9776;';
-    });
-
-    nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle.innerHTML = '&#9776;';
-      });
-    });
-  }
+function initStickyHeader() {
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+  });
 }
 
 /* -------------------------------------------------------------------------
-   Smooth Scroll & Active Link Detection
+   2. Mobile Drawer Navigation
    ------------------------------------------------------------------------- */
-function initSmoothScroll() {
-  const sections = document.querySelectorAll('section[id], header[id], footer[id]');
-  const navLinks = document.querySelectorAll('.nav-links .nav-item');
+function initMobileMenu() {
+  const menuButton = document.getElementById('menuButton');
+  const closeButton = document.getElementById('close');
+  const menuWrapper = document.getElementById('menuWrapper');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-  window.addEventListener('scroll', () => {
-    let current = '';
-    const scrollY = window.pageYOffset;
+  menuButton?.addEventListener('click', () => {
+    menuWrapper?.classList.add('show-box');
+  });
 
-    sections.forEach(section => {
-      const sectionHeight = section.offsetHeight;
-      const sectionTop = section.offsetTop - 120;
-      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-        current = section.getAttribute('id');
-      }
-    });
+  closeButton?.addEventListener('click', () => {
+    menuWrapper?.classList.remove('show-box');
+  });
 
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
-        link.classList.add('active');
-      }
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      menuWrapper?.classList.remove('show-box');
     });
   });
 }
 
 /* -------------------------------------------------------------------------
-   Product Detail Modal (English Data)
+   3. Artwork Collection Database (Local Images for 100% Reliability)
    ------------------------------------------------------------------------- */
-const PRODUCTS_DATA = {
-  ganesha: {
-    title: 'Lord Ganesha Wood Statue',
-    category: 'Sacred Mythological Statues',
+const ARTWORKS = {
+  'ganesha': {
+    title: 'Lord Ganesha Supreme Wisdom Statue',
+    category: 'Mythological Sculptures',
     img: 'images/prod_ganesha.jpg',
-    material: 'Select Kiln-Dried Solid Suar Wood',
-    desc: 'Lord Ganesha, the revered deity of wisdom, prosperity, and the remover of obstacles. Chiseled by hand with meticulous precision in the ornate Balinese praba crown.'
+    timber: 'Select Solid Suar Wood (Single Log, Oven Kiln-Dried)',
+    desc: 'An iconic spiritual sculpture capturing Lord Ganesha, revered remover of obstacles and patron of supreme wisdom. Masterfully chiseled with intricate royal crown praba motifs, modaka sweet, and peaceful presence.'
   },
-  penari: {
-    title: 'Balinese Legong Dancer Sculpture',
-    category: 'Traditional Figurative Sculpture',
+  'penari': {
+    title: 'Balinese Legong Royal Dancer Sculpture',
+    category: 'Traditional Figurative',
     img: 'images/prod_penari.jpg',
-    material: 'Aged Suar & Waru Wood',
-    desc: 'Capturing the graceful elegance of a traditional Balinese Legong dancer, crowned with frangipani blossoms and adorned in royal ceremonial attire.'
+    timber: 'Aged Solid Suar & Waru Hardwood',
+    desc: 'Capturing the graceful elegance, dynamic arching posture, and fluid hand mudras of a classical Balinese royal court dancer, crowned with tropical frangipani blossoms and ceremonial regalia.'
   },
-  kotak: {
-    title: 'Hand-Carved Keepsake Jewelry Box',
-    category: 'Authentic Souvenirs & Decor',
+  'kotak': {
+    title: 'Hand-Carved Keepsake Jewelry Chest',
+    category: 'Home Decor & Keepsakes',
     img: 'images/prod_kotak.jpg',
-    material: 'Perhutani Solid Teak Wood (Kayu Jati)',
-    desc: 'An artisanal keepsake box featuring deeply chiseled Balinese floral motifs. Perfect for precious jewelry, luxury gifting, or interior accent.'
+    timber: 'Perhutani Select Teak Wood (Kayu Jati)',
+    desc: 'An artisanal keepsake chest featuring deeply carved Balinese botanical foliage and frangipani blossoms. Hand-burnished with natural beeswax and lined with velvet to protect precious heirlooms.'
   },
-  souvenir: {
-    title: 'Miniature Meditative Figurines Set',
+  'souvenir': {
+    title: 'Miniature Meditative Monks Trio',
     category: 'Desk Decor & Keepsakes',
     img: 'images/prod_souvenir.jpg',
-    material: 'Smooth Waru Wood (Hibiscus)',
-    desc: 'A charming trio of mini figurines in serene contemplation with prayerful anjali mudra. A beloved souvenir for international travelers and art collectors.'
+    timber: 'Smooth Indonesian Waru Wood (Hibiscus)',
+    desc: 'A serene trio of contemplative monks in prayerful anjali mudra. Smooth tactile curves highlighted by natural two-tone grain flow, representing peaceful mindfulness.'
   },
-  hiasan: {
-    title: 'Balinese Sacred Wall Relief Plaque',
-    category: 'Architectural Wall Decor',
+  'hiasan': {
+    title: 'Sacred Balinese Goddess Wall Relief Plaque',
+    category: 'Architectural Wall Reliefs',
     img: 'images/prod_hiasan.jpg',
-    material: 'Aged Solid Teak Wood',
-    desc: 'A high-relief carved wall plaque portraying an ethereal Balinese goddess. Exudes spiritual tranquility, warmth, and timeless heritage for residential spaces.'
+    timber: 'Aged Solid Teak Wood (Kayu Jati)',
+    desc: 'A high-relief carved wall plaque portraying an ethereal Balinese goddess emerging from lotus petals. Exudes spiritual tranquility, warmth, and timeless heritage for residential interiors.'
+  },
+  'garuda': {
+    title: 'Garuda Wisnu Kencana Monumental Sculpture',
+    category: 'Mythological Sculptures',
+    img: 'images/gallery_1.jpg',
+    timber: 'Single Log Solid Suar Wood',
+    desc: 'Lord Vishnu mounted atop the celestial eagle Garuda. Dramatic feathered wing spread symbolizing cosmic balance, freedom, and the triumph of good over chaos.'
+  },
+  'barong': {
+    title: 'Sacred Barong Ket Protective Temple Mask',
+    category: 'Sacred Masks',
+    img: 'images/gallery_5.jpg',
+    timber: 'Aged Sacred Pule Wood with Gold Accents',
+    desc: 'The supreme guardian king spirit of Bali. Hand-chiseled according to sacred agung temple carving rites, with fearsome protective fangs and ceremonial mirror inlays.'
+  },
+  'suar-table': {
+    title: 'Live-Edge Natural Suar Dining Table',
+    category: 'Art Furniture & Living',
+    img: 'images/gallery_4.jpg',
+    timber: 'Century Suar Timber Slab (<10% Moisture)',
+    desc: 'A monumental dining table slab celebrating the dramatic chocolate and golden honey grain of Indonesian Suar. Hand-planed and paired with architectural timber trestle legs.'
+  },
+  'ramayana': {
+    title: 'Ramayana Epic Battle 3D Wall Mural',
+    category: 'Architectural Wall Reliefs',
+    img: 'images/gallery_2.jpg',
+    timber: 'Select Aged Perhutani Teak Wood',
+    desc: 'A master-level panoramic 3D woodcarving depicting the battle of Lanka from the Ramayana epic. Features multi-layered depth, jungle foliage, and mythical warriors.'
+  },
+  'teak-mirror': {
+    title: 'Frangipani Carved Ornamental Mirror',
+    category: 'Art Furniture & Living',
+    img: 'images/gallery_3.jpg',
+    timber: 'Solid Teak Wood with Beveled Mirror',
+    desc: 'An opulent wall mirror framed by intricately intertwined frangipani blossoms and tropical acanthus leaves. Ideal for luxury villa foyers.'
   }
 };
 
-const WA_NUMBER = '6287861871288';
+const WA_PHONE = '6287861871288';
 
+/* -------------------------------------------------------------------------
+   4. Lightbox Modal
+   ------------------------------------------------------------------------- */
 function initProductModal() {
   const modal = document.getElementById('productModal');
   if (!modal) return;
 
   const closeBtn = document.getElementById('modalClose');
   const modalImg = document.getElementById('modalImg');
-  const modalCategory = document.getElementById('modalCategory');
   const modalTitle = document.getElementById('modalTitle');
   const modalDesc = document.getElementById('modalDesc');
-  const modalMaterial = document.getElementById('modalMaterial');
+  const modalTimber = document.getElementById('modalTimber');
+  const modalTag = document.getElementById('modalTag');
   const modalWaBtn = document.getElementById('modalWaBtn');
 
-  document.querySelectorAll('[data-product]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const key = btn.getAttribute('data-product');
-      const item = PRODUCTS_DATA[key];
+  document.querySelectorAll('[data-art]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const artKey = btn.getAttribute('data-art');
+      const item = ARTWORKS[artKey];
       if (!item) return;
 
-      modalImg.src = item.img;
-      modalImg.alt = item.title;
-      modalCategory.textContent = item.category;
-      modalTitle.textContent = item.title;
-      modalDesc.textContent = item.desc;
-      modalMaterial.textContent = item.material;
+      if (modalImg) {
+        modalImg.src = item.img;
+        modalImg.alt = item.title;
+      }
+      if (modalTitle) modalTitle.textContent = item.title;
+      if (modalDesc) modalDesc.textContent = item.desc;
+      if (modalTimber) modalTimber.textContent = item.timber;
+      if (modalTag) modalTag.textContent = item.category;
 
-      const waMsg = encodeURIComponent(
-        `Hello Suteja Wood Art, I am interested in inquiring about and ordering this artwork:\n\n*${item.title}*\nCategory: ${item.category}\nTimber Material: ${item.material}\n\nCould you please provide availability and worldwide shipping details? Thank you!`
+      const message = encodeURIComponent(
+        `Hello Suteja Wood Art,\n\nI am inquiring about this masterpiece:\n*${item.title}*\nCategory: ${item.category}\nTimber: ${item.timber}\n\nCould you please share availability, pricing, and worldwide crated shipping details? Thank you!`
       );
-      modalWaBtn.href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
+      if (modalWaBtn) {
+        modalWaBtn.href = `https://wa.me/${WA_PHONE}?text=${message}`;
+      }
 
       modal.classList.add('active');
     });
   });
 
   closeBtn?.addEventListener('click', () => modal.classList.remove('active'));
+
   modal.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.remove('active');
   });
@@ -148,46 +181,64 @@ function initProductModal() {
 }
 
 /* -------------------------------------------------------------------------
-   Gallery Item Lightbox (English Data)
+   5. Category Filtering
    ------------------------------------------------------------------------- */
-const GALLERY_DATA = {
-  '1': { title: 'Balinese Dancer Sculpture in Temple Garden', img: 'images/gallery_1.jpg' },
-  '2': { title: 'Intricate Kuta-Mesir Floral Wood Relief', img: 'images/gallery_2.jpg' },
-  '3': { title: 'Miniature Meditative Monks Collection', img: 'images/gallery_3.jpg' },
-  '4': { title: 'Carved Frangipani Jewelry Keepsake Box', img: 'images/gallery_4.jpg' },
-  '5': { title: 'Sacred Hand-Chiseled Goddess Face Plaque', img: 'images/gallery_5.jpg' }
-};
+function initCategoryFilters() {
+  const filterBtns = document.querySelectorAll('.filter-btn-taksu');
+  const cards = document.querySelectorAll('[data-cat]');
 
-function initGalleryModal() {
-  const modal = document.getElementById('productModal');
-  if (!modal) return;
+  if (filterBtns.length === 0 || cards.length === 0) return;
 
-  const modalImg = document.getElementById('modalImg');
-  const modalCategory = document.getElementById('modalCategory');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalDesc = document.getElementById('modalDesc');
-  const modalMaterial = document.getElementById('modalMaterial');
-  const modalWaBtn = document.getElementById('modalWaBtn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
 
-  document.querySelectorAll('[data-gallery]').forEach(itemEl => {
-    itemEl.addEventListener('click', () => {
-      const gId = itemEl.getAttribute('data-gallery');
-      const gItem = GALLERY_DATA[gId];
-      if (!gItem) return;
+      const filter = btn.getAttribute('data-filter');
 
-      modalImg.src = gItem.img;
-      modalImg.alt = gItem.title;
-      modalCategory.textContent = 'ART GALLERY PORTFOLIO';
-      modalTitle.textContent = gItem.title;
-      modalDesc.textContent = 'Authentic hand-carved creation documented from the master carvers at Suteja Wood Art Bali.';
-      modalMaterial.textContent = 'Kiln-Dried Premium Hardwood';
-
-      const waMsg = encodeURIComponent(
-        `Hello Suteja Wood Art, I saw this artwork in your gallery:\n\n*${gItem.title}*\n\nCould I receive more details regarding custom commissioning a similar piece? Thank you!`
-      );
-      modalWaBtn.href = `https://wa.me/${WA_NUMBER}?text=${waMsg}`;
-
-      modal.classList.add('active');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-cat');
+        if (filter === 'all' || cat === filter) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
     });
+  });
+}
+
+/* -------------------------------------------------------------------------
+   6. Contact Form Routing to WhatsApp
+   ------------------------------------------------------------------------- */
+function initContactForm() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = form.querySelector('[name="name"]')?.value.trim() || '';
+    const email = form.querySelector('[name="email"]')?.value.trim() || '';
+    const phone = form.querySelector('[name="phone"]')?.value.trim() || '';
+    const subject = form.querySelector('[name="subject"]')?.value || 'Custom Commission';
+    const messageText = form.querySelector('[name="message"]')?.value.trim() || '';
+
+    if (!name || !phone) {
+      alert('Please provide your name and WhatsApp/phone number.');
+      return;
+    }
+
+    const waMsg = encodeURIComponent(
+      `Hello Master Suteja & Team,\n\nI would like to submit an inquiry through your website:\n\n` +
+      `*Full Name:* ${name}\n` +
+      `*Email:* ${email || 'Not provided'}\n` +
+      `*WhatsApp/Phone:* ${phone}\n` +
+      `*Subject:* ${subject}\n` +
+      `*Message / Project Details:* ${messageText || 'None'}\n\n` +
+      `Thank you!`
+    );
+
+    window.open(`https://wa.me/${WA_PHONE}?text=${waMsg}`, '_blank');
   });
 }
